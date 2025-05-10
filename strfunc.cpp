@@ -31,6 +31,11 @@ mystr::~mystr()
         delete []s;
     }
 
+//member function to return length
+int mystr::length(){
+return strlen(s);
+}
+
 //overloaded operators
 //'=' operator overloaded two times to accept a string literal and object as an input
 
@@ -73,5 +78,4 @@ istream & operator >> (istream &in,mystr &temp){
   scanf("%s",temp.s);
   return in;
 }
-
 

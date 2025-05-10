@@ -26,6 +26,11 @@ class mystr
     mystr(mystr &temp);
     ~mystr();
 
+
+//member functions:
+
+    int length();
+
 //Overloaded operators
     void operator = (const char *p);
     void operator =(mystr temp);

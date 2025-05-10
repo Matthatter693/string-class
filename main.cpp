@@ -7,4 +7,5 @@ int main(){
     cin>>s1>>s2;
     mystr s3=s1+s2;
     cout<<s3<<endl;
+    cout<<"len="<<s3.length()<<endl;
 }
