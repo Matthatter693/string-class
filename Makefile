@@ -1,19 +1,29 @@
-target = strfunc.o main.o mystrfun.o 
-
+target = strfuncstat.o mystrfunstat.o mystrfundyn.o strfuncdyn.o
+flags = -Iinclude -O3
 cc=c++
 
 main:${target}
-	${cc} ${target} -o main
+	ar -rcsv lib/string.a build/strfuncstat.o build/mystrfunstat.o
+	${cc} ${flags} -shared build/strfuncdyn.o build/mystrfundyn.o -o lib/string.so
+	strip lib/string.so
+	strip lib/string.a
 
-strfunc.o:strfunc.cpp
-	${cc} -c strfunc.cpp
+strfuncstat.o:src/strfunc.cpp
+	${cc} ${flags} -c src/strfunc.cpp -o build/strfuncstat.o
 
-main.o:main.cpp
-	${cc} -c main.cpp
+mystrfunstat.o:src/mystrfun.cpp
+	${cc} ${flags} -c src/mystrfun.cpp -o build/mystrfunstat.o
 
-mystrfun.o:mystrfun.cpp
-	${cc} -c mystrfun.cpp
+strfuncdyn.o:src/strfunc.cpp
+	${cc} ${flags} -fPIC -c src/strfunc.cpp -o build/strfuncdyn.o
+
+mystrfundyn.o:src/mystrfun.cpp
+	${cc} ${flags} -fPIC -c src/mystrfun.cpp -o build/mystrfundyn.o
+
+build:lib/string.a lib/string.so
+	${cc} ${flags} src/main.cpp lib/string.a -o strstat
+	${cc} ${flags} src/main.cpp lib/string.so -o strdyn
 
 clean:
 	@echo "cleaning"
-	rm -f *.o main
+	rm -f build/*.o strstat strdyn
